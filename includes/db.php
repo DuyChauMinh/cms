@@ -16,6 +16,6 @@ foreach ($db as $key => $value) {
 // * đoạn code trên bị lỗi vì sử dụng key của array mà khong đổi qua constant
 $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 if ($conn) {
-    echo 'connected';
+    echo 'db connected';
 }
 ?>

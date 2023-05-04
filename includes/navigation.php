@@ -8,11 +8,24 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Start Bootstrap</a>
+                <a class="navbar-brand" href="#">
+                    bootstrap template
+                </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
+            <?php
+            $query = 'SELECT * FROM categories';
+            $SELECT_ALL_CAL = mysqli_query($conn, $query);
+            while ($row = mysqli_fetch_assoc($SELECT_ALL_CAL)) {
+                $catTitle = $row['catTitle'];
+                echo "{$catTitle}";
+            }
+            ?>
+                    <li>
+                        <a href="admin">admin</a>
+                    </li>
                     <li>
                         <a href="#">About</a>
                     </li>

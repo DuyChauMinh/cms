@@ -3,10 +3,6 @@ include 'includes/header.php';
 include 'includes/db.php';
 include 'includes/navigation.php';
 ?>
-
-    <!-- Navigation -->
-
-
     <!-- Page Content -->
     <div class="container">
 
@@ -15,17 +11,25 @@ include 'includes/navigation.php';
             <!-- Blog Entries Column -->
             <div class="col-md-8">
 
-<?php
-$query = 'SELECT * FROM posts';
-$SELECT_ALL_POSTS = mysqli_query($conn, $query);
-while ($row = mysqli_fetch_assoc($SELECT_ALL_POSTS)) {
+<?php if (isset($_POST['submit'])) {
+    $search = $_POST['search'];
+    $query = "SELECT * FROM posts where post_tag LIKE '%$search%'";
+    $search_query = mysqli_query($conn, $query);
+    if (!$search_query) {
+        die('FAILED' . mysqli_error($conn));
+    }
+    $count = mysqli_num_rows($search_query);
+    if ($count == 0) {
+        echo 'No result';
+    } else {
+        while ($row = mysqli_fetch_assoc($search_query)) {
 
-    $post_title = $row['post_title'];
-    $post_author = $row['post_author'];
-    $post_date = $row['post_date'];
-    $post_image = $row['post_image'];
-    $post_content = $row['post_content'];
-    ?>
+            $post_title = $row['post_title'];
+            $post_author = $row['post_author'];
+            $post_date = $row['post_date'];
+            $post_image = $row['post_image'];
+            $post_content = $row['post_content'];
+            ?>
     <h1 class="page-header">
                     Page Heading
                     <small>Secondary Text</small>
@@ -40,15 +44,18 @@ while ($row = mysqli_fetch_assoc($SELECT_ALL_POSTS)) {
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> <?php echo $post_date; ?></p>
                 <hr>
-                <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="no image available">
+                <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="no images available">
                 <hr>
                 <p><?php echo $post_content; ?></p>
                 <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                 <hr>
 <?php
-}
-?>
+        }
+    }
+} ?>
+
+
 
 
                 
